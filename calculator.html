@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Futuristic Calculator</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+  body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at top, #0a0a0a 0%, #000 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Orbitron', sans-serif;
+    color: #0ff;
+  }
+
+  .calculator {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #00ffff50;
+    border-radius: 20px;
+    box-shadow: 0 0 30px #00ffff30, inset 0 0 15px #00ffff10;
+    width: 340px;
+    padding: 25px;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .display {
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid #00ffff50;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+    font-size: 26px;
+    color: #0ff;
+    text-align: right;
+    box-shadow: inset 0 0 10px #00ffff40;
+  }
+
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  button {
+    background: rgba(0, 255, 255, 0.08);
+    border: 1px solid #00ffff60;
+    border-radius: 12px;
+    color: #0ff;
+    font-size: 20px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 12px #00ffff10;
+  }
+
+  button:hover {
+    background: #00ffff20;
+    box-shadow: 0 0 20px #00ffff80;
+  }
+
+  .equal {
+    grid-column: span 2;
+    background: linear-gradient(45deg, #00ffff, #00ffa2);
+    color: #000;
+    font-weight: bold;
+    text-shadow: none;
+    box-shadow: 0 0 20px #00ffea;
+  }
+
+  .equal:hover {
+    background: linear-gradient(45deg, #00ffa2, #00ffff);
+  }
+</style>
+</head>
+<body>
+
+  <div class="calculator">
+    <div id="display" class="display">0</div>
+    <div class="buttons">
+      <button onclick="clearDisplay()">C</button>
+      <button onclick="backspace()">⌫</button>
+      <button onclick="append('%')">%</button>
+      <button onclick="append('/')">÷</button>
+
+      <button onclick="append('7')">7</button>
+      <button onclick="append('8')">8</button>
+      <button onclick="append('9')">9</button>
+      <button onclick="append('*')">×</button>
+
+      <button onclick="append('4')">4</button>
+      <button onclick="append('5')">5</button>
+      <button onclick="append('6')">6</button>
+      <button onclick="append('-')">−</button>
+
+      <button onclick="append('1')">1</button>
+      <button onclick="append('2')">2</button>
+      <button onclick="append('3')">3</button>
+      <button onclick="append('+')">+</button>
+
+      <button onclick="append('0')">0</button>
+      <button onclick="append('.')">.</button>
+      <button class="equal" onclick="calculate()">=</button>
+    </div>
+  </div>
+
+<script>
+  const display = document.getElementById('display');
+
+  function append(value) {
+    if (display.innerText === '0') display.innerText = value;
+    else display.innerText += value;
+  }
+
+  function clearDisplay() {
+    display.innerText = '0';
+  }
+
+  function backspace() {
+    display.innerText = display.innerText.slice(0, -1) || '0';
+  }
+
+  function calculate() {
+    try {
+      display.innerText = eval(display.innerText);
+    } catch {
+      display.innerText = 'Error';
+    }
+  }
+
+  // keyboard input support
+  document.addEventListener('keydown', (e) => {
+    const allowed = '0123456789+-*/.%';
+    if (allowed.includes(e.key)) append(e.key);
+    else if (e.key === 'Enter') calculate();
+    else if (e.key === 'Backspace') backspace();
+    else if (e.key === 'Escape') clearDisplay();
+  });
+</script>
+</body>
+</html>
